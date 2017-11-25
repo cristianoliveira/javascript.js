@@ -9,6 +9,11 @@ function InvalidToken(char) {
   this.name = "InvalidToken"
 }
 
+function InvalidSintax(expected, got) {
+  this.message = `Sintaxe error. Expected: '${expected}' got '${got}'`;
+  this.name = "InvalidSintax"
+}
+
 // Lexer
 //
 // Responsible for read a raw String and extract Tokens from it
@@ -16,6 +21,7 @@ class Lexer {
   constructor(text) {
     this.chars = text.split("");
     this.pointer = 0;
+    this.current = null;
   }
 
   // Return the next token.
@@ -36,6 +42,16 @@ class Lexer {
     }
 
     throw new InvalidToken(this.chars[current])
+  }
+
+  consume(type) {
+    this.current = this.next();
+
+    if (this.current.type != type) {
+      throw new InvalidSintax(type, this.current.type);
+    }
+
+    return this.current;
   }
 
   isEndOfFile() {
