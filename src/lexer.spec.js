@@ -18,6 +18,14 @@ describe("The lexer", () => {
     expect(lexer.consume("NUMBER")).toEqual({ type: "NUMBER", value: 3 });
   });
 
+  it("accepts numbers with more than one digit", () => {
+    const lexer = new Lexer("12+3");
+
+    expect(lexer.consume("NUMBER")).toEqual({ type: "NUMBER", value: 12 });
+    expect(lexer.consume("ADD_OPERATOR")).toEqual({ type: "ADD_OPERATOR", value: "+" });
+    expect(lexer.consume("NUMBER")).toEqual({ type: "NUMBER", value: 3 });
+  });
+
   it("should raise error for not expected type", () => {
     const lexer = new Lexer("1+3");
     expect(() => lexer.consume("ADD_OPERATOR")).toThrow();

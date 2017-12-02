@@ -14,6 +14,10 @@ function InvalidSintax(expected, got) {
   this.name = "InvalidSintax"
 }
 
+function isNumber(char) {
+  return !isNaN(char)
+}
+
 // Lexer
 //
 // Responsible for read a raw String and extract Tokens from it
@@ -30,18 +34,30 @@ class Lexer {
       return { type: "EOF", value: null };
     }
 
-    const current = this.pointer;
-    this.pointer += 1;
-
-    if (OPERATOR[this.chars[current]]) {
-      return OPERATOR[this.chars[current]];
+    let token = OPERATOR[this.chars[this.pointer]];
+    if (token) {
+      this.pointer += 1;
+      return token
     }
 
-    if (!isNaN(this.chars[current])) {
-      return { type: "NUMBER", value: parseInt(this.chars[current]) };
+    if (isNumber(this.chars[this.pointer])) {
+      token = this.consumeNumber()
+      this.pointer += 1;
+      return token
     }
 
-    throw new InvalidToken(this.chars[current])
+    throw new InvalidToken(this.chars[this.pointer])
+  }
+
+  consumeNumber() {
+    let number = this.chars[this.pointer];
+
+    while (isNumber(this.chars[this.pointer + 1])) {
+      number += this.chars[this.pointer + 1];
+      this.pointer += 1;
+    }
+
+    return { type: "NUMBER", value: parseInt(number) };
   }
 
   consume(type) {
