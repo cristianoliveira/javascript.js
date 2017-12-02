@@ -39,7 +39,8 @@ By following this series of post you will understand more about how this things 
  - [  ] Function Declaration.
  - [  ] Global and function scope.
  - [  ] Closures.
- - [  ] High order functions.
+ - [  ] First class functions.
+ - [  ] High order functions. (map, reduce)
  - [  ] Array declaration.
  - [  ] [Turing Complete](https://en.wikipedia.org/wiki/Turing_completeness)
 

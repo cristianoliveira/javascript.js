@@ -4,6 +4,7 @@
   "description": "The javascript interpreter write in javascript",
   "main": "src/repl.js",
   "scripts": {
+    "repl": "node src/repl.js",
     "test": "jest"
   },
   "repository": {
